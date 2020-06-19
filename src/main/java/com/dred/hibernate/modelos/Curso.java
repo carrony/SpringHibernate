@@ -9,7 +9,7 @@ public class Curso {
 	
 	@Id
 	@GeneratedValue
-	private long idCurso;
+	private Long idCurso;
 	private String nombre;
 	private String descripcion;
 	
