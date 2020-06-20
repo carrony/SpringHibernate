@@ -3,6 +3,7 @@ package com.dred.hibernate.modelos.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -20,8 +21,9 @@ public class CursoDaoHibernate implements CursoDAO {
 
 	@Override
 	public List<Curso> getListaCursos() {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Curso> query = em.createQuery("FROM Curso curso",Curso.class);
+		List<Curso> lista = query.getResultList();
+		return lista;
 	}
 
 	@Override
@@ -41,8 +43,10 @@ public class CursoDaoHibernate implements CursoDAO {
 	@Override
 	public void eliminarCurso(Long idCurso) {
 		Curso curso = getCurso(idCurso);
-		if (curso!=null)
+		if (curso!=null) {
 			em.remove(curso);
+			em.flush();
+		}
 	}
 
 	
