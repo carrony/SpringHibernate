@@ -4,7 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
+@NamedQueries(value = {
+	@NamedQuery ( name="Cursos.todos", query="FROM Curso curso"),
+	@NamedQuery ( name="Cursos.buscaEnDescripcion", 
+	              query="FROM Curso curso WHERE curso.descripcion LIKE CONCAT('%',:texto,'%')")
+})
 public class Curso {
 	
 	@Id

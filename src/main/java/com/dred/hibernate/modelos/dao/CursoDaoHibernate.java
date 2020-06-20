@@ -21,7 +21,7 @@ public class CursoDaoHibernate implements CursoDAO {
 
 	@Override
 	public List<Curso> getListaCursos() {
-		TypedQuery<Curso> query = em.createQuery("FROM Curso curso",Curso.class);
+		TypedQuery<Curso> query = em.createNamedQuery("Cursos.todos",Curso.class);
 		List<Curso> lista = query.getResultList();
 		return lista;
 	}
@@ -49,6 +49,11 @@ public class CursoDaoHibernate implements CursoDAO {
 		}
 	}
 
-	
+	public List<Curso> getListaCursos(String descripcion) {
+		TypedQuery<Curso> query = em.createNamedQuery("Cursos.buscaEnDescripcion",Curso.class);
+		query.setParameter("texto", descripcion);
+		List<Curso> lista = query.getResultList();
+		return lista;
+	}
 
 }

@@ -79,17 +79,30 @@ class CursoTest {
 		Assertions.assertEquals(c,c2);
 	}
 	
-@Test
-@Order(5)
-void getListaCursosTest() {
-	System.out.println("################# Test getListaCursos ###################");
-	List<Curso> listaCursos = cursoDAO.getListaCursos();
-
-	// Lo imprimo en el log para verlos
-	LOGGER.info("Lista de cursos " + listaCursos);
-
+	@Test
+	@Order(5)
+	void getListaCursosTest() {
+		System.out.println("################# Test getListaCursos ###################");
+		List<Curso> listaCursos = cursoDAO.getListaCursos();
 	
-	Assertions.assertEquals(4, listaCursos.size());
-}
+		// Lo imprimo en el log para verlos
+		LOGGER.info("Lista de cursos " + listaCursos);
+	
+		
+		Assertions.assertEquals(4, listaCursos.size());
+	}
+	
+	@Test
+	@Order(6)
+	void getListaCursosDescTest() {
+		System.out.println("################# Test getListaCursosDesc ###################");
+		List<Curso> listaCursos = cursoDAO.getListaCursos("framework");
+	
+		// Lo imprimo en el log para verlos
+		LOGGER.info("Lista de cursos Desc" + listaCursos);
+	
+		
+		Assertions.assertEquals(2, listaCursos.size());
+	}
 
 }
