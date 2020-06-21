@@ -104,5 +104,18 @@ class CursoTest {
 		
 		Assertions.assertEquals(2, listaCursos.size());
 	}
+	
+	@Test
+	@Order(7)
+	void getListaNativeTest() {
+		System.out.println("################# Test getListaNative ###################");
+		List<Curso> listaCursos = cursoDAO.getListaCursosNativa();
+	
+		// Lo imprimo en el log para verlos
+		LOGGER.info("Lista de cursos Desc" + listaCursos);
+	
+		
+		Assertions.assertEquals(4, listaCursos.size());
+	}
 
 }

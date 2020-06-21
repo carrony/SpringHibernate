@@ -55,5 +55,11 @@ public class CursoDaoHibernate implements CursoDAO {
 		List<Curso> lista = query.getResultList();
 		return lista;
 	}
+	
+	public List<Curso> getListaCursosNativa() {
+		TypedQuery<Curso> query = em.createNamedQuery("Cursos.todos_native",Curso.class);
+		List<Curso> lista = query.getResultList();
+		return lista;
+	}
 
 }

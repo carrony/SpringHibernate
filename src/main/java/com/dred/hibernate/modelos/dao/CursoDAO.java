@@ -10,4 +10,5 @@ public interface CursoDAO {
 	public void guardarCurso(Curso curso);
 	public void eliminarCurso(Long idCurso);
 	public List<Curso> getListaCursos(String descripcion);
+	public List<Curso> getListaCursosNativa() ;
 }

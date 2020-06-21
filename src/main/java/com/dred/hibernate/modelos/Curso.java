@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -13,6 +15,8 @@ import org.hibernate.annotations.NamedQuery;
 	@NamedQuery ( name="Cursos.buscaEnDescripcion", 
 	              query="FROM Curso curso WHERE curso.descripcion LIKE CONCAT('%',:texto,'%')")
 })
+@NamedNativeQuery ( name="Cursos.todos_native" , resultClass=Curso.class,
+	        query="SELECT * FROM Curso c ORDER by c.nombre" )
 public class Curso {
 	
 	@Id
