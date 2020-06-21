@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dred.hibernate.modelos.Curso;
 import com.dred.hibernate.modelos.dao.CursoDAO;
@@ -81,12 +82,18 @@ class CursoTest {
 	
 	@Test
 	@Order(5)
+	@Transactional
 	void getListaCursosTest() {
 		System.out.println("################# Test getListaCursos ###################");
 		List<Curso> listaCursos = cursoDAO.getListaCursos();
 	
-		// Lo imprimo en el log para verlos
-		LOGGER.info("Lista de cursos " + listaCursos);
+		// Vamos a mostrar los cursos con sus review
+		for (Curso c:listaCursos) {
+			LOGGER.info("Curso: "+c);
+			LOGGER.info("Reviews:" +c.getReviews());
+		}
+		
+		
 	
 		
 		Assertions.assertEquals(4, listaCursos.size());

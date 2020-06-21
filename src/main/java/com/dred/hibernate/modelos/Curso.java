@@ -1,10 +1,13 @@
 package com.dred.hibernate.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
@@ -25,7 +28,11 @@ public class Curso {
 	private String nombre;
 	private String descripcion;
 	
+	@OneToMany(mappedBy="curso")
+	private List<Review> reviews;
+	
 	public Curso() {
+		reviews = new ArrayList<>();
 	}
 	
 	public Curso(String nombre, String descripcion) {
@@ -52,6 +59,20 @@ public class Curso {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void addReview(Review review) {
+		this.reviews.add(review);
+	}
+	
+	public void removeReview(Review review) {
+		this.reviews.remove(review);
+	}
+
 	@Override
 	public String toString() {
 		return "Curso [idCurso=" + idCurso + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
