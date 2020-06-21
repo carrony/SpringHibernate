@@ -1,9 +1,14 @@
 package com.dred.hibernate.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class Alumno {
@@ -19,7 +24,11 @@ public class Alumno {
 	@OneToOne
 	private Usuario usuario;
 	
+	@ManyToMany(mappedBy="alumnos")
+    private List<Curso> cursos=new ArrayList<>();
+	
 	public Alumno() {
+		cursos=new ArrayList<>();
 	}
 
 	public Alumno(String dni, String nombre, String apellidos, String telefono) {
@@ -67,6 +76,18 @@ public class Alumno {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void addCurso(Curso curso) {
+		this.cursos.add(curso);
+	}
+	
+	public void removeCurso(Curso curso) {
+		this.cursos.remove(curso);
 	}
 
 	@Override

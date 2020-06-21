@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dred.hibernate.modelos.Alumno;
 import com.dred.hibernate.modelos.Usuario;
@@ -44,6 +45,19 @@ class AlumnoTest {
 		LOGGER.info("Alumno recuperado: " + al);
 			
 		Assertions.assertEquals(alumno, al);
+	}
+	
+	@Test
+	@Order(2)
+	@Transactional
+	void mostrarCursosAlumnoTest() {
+		System.out.println("################# Test mostrarCursos ###################");
+		
+		Alumno alumno= alumnoDAO.getAlumno("20000000P");
+		LOGGER.info("Alumno recuperado: " + alumno);
+		LOGGER.info("Cursos Matriculados: " + alumno.getCursos());
+			
+		Assertions.assertEquals(2, alumno.getCursos().size());
 	}
 
 }

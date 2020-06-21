@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.NamedNativeQuery;
@@ -29,10 +32,15 @@ public class Curso {
 	private String descripcion;
 	
 	@OneToMany(mappedBy="curso")
-	private List<Review> reviews;
+	private List<Review> reviews =new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name= "matricula",
+    joinColumns = {@JoinColumn(name="id_curso")},
+    inverseJoinColumns = {@JoinColumn(name="dni")}) 
+	private List<Alumno> alumnos =new ArrayList<>();
 	
 	public Curso() {
-		reviews = new ArrayList<>();
 	}
 	
 	public Curso(String nombre, String descripcion) {
@@ -71,6 +79,18 @@ public class Curso {
 	
 	public void removeReview(Review review) {
 		this.reviews.remove(review);
+	}
+	
+	public List<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void addAlumno(Alumno alumno) {
+		this.alumnos.add(alumno);
+	}
+	
+	public void removelumno(Alumno alumno) {
+		this.alumnos.remove(alumno);
 	}
 
 	@Override

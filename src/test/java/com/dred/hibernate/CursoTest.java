@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dred.hibernate.modelos.Alumno;
 import com.dred.hibernate.modelos.Curso;
 import com.dred.hibernate.modelos.dao.CursoDAO;
 
@@ -123,6 +124,20 @@ class CursoTest {
 	
 		
 		Assertions.assertEquals(4, listaCursos.size());
+	}
+	
+	@Test
+	@Order(8)
+	@Transactional
+	void mostrarCursosAlumnoTest() {
+		System.out.println("################# Test mostrar Cursos y Alumnos ###################");
+		
+		Curso curso= cursoDAO.getCurso(1L);
+		
+		LOGGER.info("Curso: " + curso);
+		LOGGER.info("Alumnos matriculados: " + curso.getAlumnos());
+			
+		Assertions.assertEquals(3, curso.getAlumnos().size());
 	}
 
 }
