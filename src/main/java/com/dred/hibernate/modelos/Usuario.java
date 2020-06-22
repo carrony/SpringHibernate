@@ -2,6 +2,7 @@ package com.dred.hibernate.modelos;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
@@ -18,6 +19,9 @@ public class Usuario {
 	private String idUsuario;
 	private String password;
 	private String tipo;
+	
+	@OneToOne(mappedBy="usuario")
+	private Alumno alumno;
 	
 	public Usuario() {
 		this.tipo="Básico";

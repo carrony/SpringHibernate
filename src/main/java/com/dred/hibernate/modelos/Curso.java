@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -31,7 +32,7 @@ public class Curso {
 	private String nombre;
 	private String descripcion;
 	
-	@OneToMany(mappedBy="curso")
+	@OneToMany(mappedBy="curso", fetch = FetchType.EAGER)
 	private List<Review> reviews =new ArrayList<>();
 	
 	@ManyToMany

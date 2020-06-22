@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,10 @@ public class CursoDaoHibernate implements CursoDAO {
 	
 	@Autowired
 	EntityManager em;
+	
+	@Autowired
+	private static final Logger LOGGER = 
+	          LogManager.getLogger(CursoDaoHibernate.class);
 
 	@Override
 	public List<Curso> getListaCursos() {
@@ -61,5 +67,8 @@ public class CursoDaoHibernate implements CursoDAO {
 		List<Curso> lista = query.getResultList();
 		return lista;
 	}
+	
+	
+
 
 }

@@ -2,8 +2,11 @@ package com.dred.hibernate;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -15,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dred.hibernate.modelos.Alumno;
 import com.dred.hibernate.modelos.Curso;
 import com.dred.hibernate.modelos.dao.CursoDAO;
 
@@ -28,15 +30,22 @@ class CursoTest {
 	private CursoDAO cursoDAO;
 	
 	@Autowired
+	EntityManager em;
+	
+	@Autowired
 	private static final Logger LOGGER = 
 	          LogManager.getLogger(CursoTest.class);
 
 
 	@Test
 	@Order(1)
+	@Transactional
 	void getCursoTest() {
 		System.out.println("################# Test getCurso ###################");
 		Curso c= cursoDAO.getCurso(1L);
+		LOGGER.info("Curso: "+c);
+		LOGGER.info("Reviews:" +c.getReviews());
+		
 		Assertions.assertTrue(c.getNombre().equals("Servlets")
 	       && c.getDescripcion().equals("Crea servlets con la Servlet API"));
 	}
@@ -139,5 +148,57 @@ class CursoTest {
 			
 		Assertions.assertEquals(3, curso.getAlumnos().size());
 	}
+	
+	@Test
+	@Order(9)
+	@Transactional
+	public void probarEstados() {
+		System.out.println("################# Probando estados ###################");
+		
+		Curso curso= new Curso("API Rest Spring", "Crear Servicios API Rest con Spring");
+		cursoDAO.guardarCurso(curso);
+		LOGGER.info("El curso antes de modificar es: "+curso);
+		Session s;
+		curso.setNombre("API Rest Spring Boot");
+		Curso c2 = cursoDAO.getCurso(curso.getIdCurso());
+		LOGGER.info("Curso recuperado de la BBDD: "+c2);
+		Assertions.assertEquals(curso, c2);
+	}
 
+	@Test
+	@Order(10)
+	@Transactional
+	public void probarDetach() {
+		System.out.println("################# Probando detach ###################");
+		
+		Curso curso= new Curso("Java FX", "Nueva interfaz gráfica de Java");
+		em.persist(curso);
+		LOGGER.info("El curso persistido es: "+curso);
+		
+		em.detach(curso);
+		curso.setNombre("API Rest Spring Boot");
+		
+		Curso c2 = em.find(Curso.class, curso.getIdCurso());
+		LOGGER.info("Curso recuperado de la BBDD: "+c2);
+		Assertions.assertNotEquals(curso, c2);
+	}
+	
+	@Test
+	@Order(11)
+	@Transactional
+	public void probarRefresh() {
+		System.out.println("################# Probando refresh ###################");
+		
+		Curso curso= new Curso("Regex", "Expresiones Regulares");
+		em.persist(curso);
+		LOGGER.info("El curso persistido es: "+curso);
+		
+		em.flush();
+		curso.setNombre("Regex Expressions");
+		em.refresh(curso);
+		
+		Curso c2 = em.find(Curso.class, curso.getIdCurso());
+		LOGGER.info("Curso recuperado de la BBDD: "+c2);
+		Assertions.assertEquals(curso, c2);
+	}
 }
