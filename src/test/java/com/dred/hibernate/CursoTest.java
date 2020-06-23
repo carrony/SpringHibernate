@@ -38,8 +38,7 @@ class CursoTest {
 	
 	@Test
 	void eliminarCursoTest() {
-		Curso c= cursoDAO.getCurso(5L);
-		cursoDAO.eliminarCurso(c.getIdCurso());
+		cursoDAO.eliminarCurso(5L);
 		
 		//buscamos y si no está se ha eliminado
 		Curso c2=cursoDAO.getCurso(5L);
